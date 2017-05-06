@@ -98,14 +98,14 @@ class ConfParse(object):
                     if config.has_option(section, confoption):
                         dontboosthashtags = config.get(section, confoption)
                         if dontboosthashtags:
-                            hashtags = [i for i in dontboosthashtags.split(',') if i != '']
+                            hashtags = [i for i in dontboosthashtags.split(self.stringsep) if i != '']
                             self.dontboosthashtags = hashtags
                     # only_if_hashtags option
                     confoption = 'only_if_hashtags'
                     if config.has_option(section, confoption):
                         onlyifhashtags = config.get(section, confoption)
                         if onlyifhashtags:
-                            hashtags = [i for i in only_if_hashtags.split(',') if i != '']
+                            hashtags = [i for i in onlyifhashtags.split(self.stringsep) if i != '']
                             self.onlyifhashtags = hashtags
                     # match option
                     confoption = 'match'
@@ -163,6 +163,10 @@ class ConfParse(object):
         except ValueError as err:
             print(err)
             self.youngerthan = 0
+
+        # check if waitminsecs >= waitmaxsecs
+        if self.waitminsecs > self.waitmaxsecs:
+            sys.exit('In the [{section}] section, waitminsecs should be smaller than waitmaxsecs. Leaving.'.format(section='retweet'))
 
     @property
     def confvalues(self):
