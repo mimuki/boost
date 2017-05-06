@@ -50,7 +50,7 @@ Alternatively you can donate cryptocurrencies:
 
 * Launch Boost
 
-        $ boost /path/to/boost.ini
+        $ boost -c /path/to/boost.ini
 
 ### Authors
 
