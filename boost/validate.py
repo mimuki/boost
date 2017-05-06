@@ -70,7 +70,7 @@ class Validate(object):
         found = False
         # check if the current toot contains a do-not-boost hashtag
         for i in self.cfgvalues['dontboosthashtags']:
-            if 'class="mention hashtag">#<span>{}</span></a>'.format(i) in self.toot['content']:
+            if '#<span>{}</span></a>'.format(i) in self.toot['content']:
                 found = True
         return found
 
@@ -80,7 +80,7 @@ class Validate(object):
         if self.cfgvalues['onlyifhashtags']:
             # check if the current toot contains one of the hashtags to be boosted
             for i in self.cfgvalues['onlyifhashtags']:
-                if 'class="mention hashtag">#<span>{}</span></a>'.format(i) in self.toot['content']:
+                if '#<span>{}</span></a>'.format(i) in self.toot['content']:
                     found = True
         else:
             found = True
