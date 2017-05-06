@@ -27,8 +27,8 @@ CLASSIFIERS = [
     'Environment :: Console',
     'License :: OSI Approved :: GNU General Public License (GPL)',
     'Operating System :: POSIX :: Linux',
-    'Programming Language :: Python :: 3.4'
-    'Programming Language :: Python :: 3.5'
+    'Programming Language :: Python :: 3.4',
+    'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6'
 ]
 
