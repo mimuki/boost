@@ -42,23 +42,27 @@ class Validate(object):
     def main(self):
         '''Main of the Validate class'''
         # test if it was boosted enough to be boosted by me
-        if self.toot.boostcount >= self.cfgvalues['boosts']:
+        if self.toot['reblogs_count'] >= self.cfgvalues['boosts']:
             # send the toot if all checks are ok
             if not self.not_boost_hashtags() and self.boost_only_if_hashtags() and self.boost_only_if_older_than() and self.boost_only_if_younger_than() and self.boost_only_if_matching_regex():
                 self.storeit = True
                 if self.args.dryrun:
-                    print("toot {} sent!".format(self.toot.id))
+                    if not self.args.populatedb:
+                        print("toot {} should have been sent!".format(self.toot['id']))
+                    else:
+                        print("toot {} should have been populated!".format(self.toot['id']))
                 else:
                     # at last boost the toot
-                    self.api.boost(self.toot.id)
+                    if not self.args.populatedb:
+                        self.api.status_reblog(self.toot['id'])
                     if self.cfgvalues['favorite']:
-                        self.api.create_favorite(self.toot.id)
+                        self.api.status_favourite(self.toot['id'])
             else:
                 self.storeit = False
         # now store the toot
-        if not self.twp.wasposted(self.toot.id) and self.storeit:
+        if not self.twp.wasposted(self.toot['id']) and self.storeit:
             if not self.args.dryrun:
-                self.twp.storetoot(self.toot.id)
+                self.twp.storetoot(self.toot['id'])
             WaitAMoment(self.cfgvalues['waitminsecs'], self.cfgvalues['waitmaxsecs'])
 
     def not_boost_hashtags(self):
@@ -66,7 +70,7 @@ class Validate(object):
         found = False
         # check if the current toot contains a do-not-boost hashtag
         for i in self.cfgvalues['dontboosthashtags']:
-            if '#{}'.format(i) in self.toot.text:
+            if 'class="mention hashtag">#<span>{}</span></a>'.format(i) in self.toot['content']:
                 found = True
         return found
 
@@ -76,7 +80,7 @@ class Validate(object):
         if self.cfgvalues['onlyifhashtags']:
             # check if the current toot contains one of the hashtags to be boosted
             for i in self.cfgvalues['onlyifhashtags']:
-                if '#{}'.format(i) in self.toot.text:
+                if 'class="mention hashtag">#<span>{}</span></a>'.format(i) in self.toot['content']:
                     found = True
         else:
             found = True
@@ -88,7 +92,7 @@ class Validate(object):
         if self.cfgvalues['olderthan']:
             # check if the toot is older than a number of minutes
             now = datetime.datetime.utcnow()
-            tootbirth = self.toot.created_at
+            tootbirth = datetime.datetime.strptime(self.toot['created_at'].split('.')[0], '%Y-%m-%dT%H:%M:%S')
             lapse = now - tootbirth
             try:
                 if (lapse.seconds / 60) > self.cfgvalues['olderthan']:
@@ -107,7 +111,7 @@ class Validate(object):
         if self.cfgvalues['youngerthan']:
             # check if the toot is younger than a number of minutes
             now = datetime.datetime.utcnow()
-            tootbirth = self.toot.created_at
+            tootbirth = datetime.datetime.strptime(self.toot['created_at'].split('.')[0], '%Y-%m-%dT%H:%M:%S')
             lapse = now - tootbirth
             try:
                 if (lapse.seconds / 60) < self.cfgvalues['youngerthan']:
@@ -123,6 +127,6 @@ class Validate(object):
     def boost_only_if_matching_regex(self):
         '''boost only if the toot contains given regex'''
         match = True
-        if self.cfgvalues['match_regex']:            
-            match = re.search(self.cfgvalues['match_regex'], self.toot.text)            
+        if self.cfgvalues['matchregex']:            
+            match = re.search(self.cfgvalues['matchregex'], self.toot['content'])            
         return True if match else False

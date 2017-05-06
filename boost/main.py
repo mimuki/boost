@@ -55,13 +55,13 @@ class Main(object):
     def main(self):
         '''Main of the Main class'''
         for user in self.cfgvalues['userstoboost']:
-            lasttoots = self.api.account_statuses(user)
+            lasttoots = self.api.account_statuses(self.api.account_search(user, limit=1)[0]['id'])
             lasttoots.reverse()
             if self.args.limit:
                 lasttoots = lasttoots[(len(lasttoots) - self.args.limit) :]
             tootstosend = []
             # test if the last 20 tweets were posted
             for lasttoot in lasttoots:
-                if not self.twp.wasposted(lasttoot.id):
+                if not self.twp.wasposted(lasttoot['id']):
                     Validate(self.cfgvalues, self.args, self.api, lasttoot)
         sys.exit(0)

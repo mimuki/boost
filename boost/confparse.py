@@ -84,7 +84,6 @@ class ConfParse(object):
                     confoption = 'boosts'
                     if config.has_option(section, confoption):
                         self.boosts = config.get(section, confoption)
-                    self.boosts = config.get(section, confoption)
                     # waitminsec option
                     confoption = 'waitminsecs'
                     if config.has_option(section, confoption):
@@ -126,7 +125,7 @@ class ConfParse(object):
                     # like option
                     confoption = 'favorite'
                     if config.has_option(section, confoption):
-                        self.favorite = config.getboolean(section, favorite)
+                        self.favorite = config.getboolean(section, confoption)
                 ### sqlite section
                 section = 'sqlite'
                 if config.has_section(section):

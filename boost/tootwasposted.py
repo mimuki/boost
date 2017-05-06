@@ -49,7 +49,7 @@ class TootWasPosted:
 
     def storetoot(self, toottostore):
         '''Store the last sent tweet'''
-        lastsenttoot = SentToots(id=tootstostore)
+        lastsenttoot = SentToots(id=toottostore)
         try:
             self.session.add(lastsenttoot)
             self.session.commit()
