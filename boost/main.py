@@ -60,7 +60,7 @@ class Main(object):
             if self.args.limit:
                 lasttoots = lasttoots[(len(lasttoots) - self.args.limit) :]
             tootstosend = []
-            # test if the last 20 tweets were posted
+            # test if the last 20 toots were posted
             for lasttoot in lasttoots:
                 if not self.twp.wasposted(lasttoot['id']):
                     Validate(self.cfgvalues, self.args, self.api, lasttoot)

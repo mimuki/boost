@@ -43,7 +43,7 @@ class CliParse(object):
                             help='Do not actually feed database and do not send the boosts')
         parser.add_argument('-p', '--populate-database', action='store_true', default=False,
                             dest='populatedb',
-                            help='populate tweet ids in the local database without actually posting them to Mastodon')
+                            help='populate toot ids in the local database without actually posting them to Mastodon')
         parser.add_argument('-v', '--version',
                             action='version',
                             version='%(prog)s 0.1',

@@ -1,5 +1,5 @@
-How to install Retweet
-=============================
+How to install Boost
+====================
 From PyPI
 ^^^^^^^^^
     $ pip3 install boost

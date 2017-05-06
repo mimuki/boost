@@ -35,8 +35,8 @@ For the [mastodon] section:
 For the [boost] section:
 
 - boosts: the minimal number of boosts the toot needs to have in order we also boost it. Defaults to 0.
-- waitminsecs: the minimal number of seconds to wait after processing a tweet. Defaults to 1.
-- waitmaxsecs: the maximal number of seconds to wait after processing a tweet. Defaults to 1.
+- waitminsecs: the minimal number of seconds to wait after processing a toot. Defaults to 1.
+- waitmaxsecs: the maximal number of seconds to wait after processing a toot. Defaults to 1.
 - do_not_boost_hashtags: do not boost if one of the hashtags in this list is in the text of the toot.
 - only_if_hashtags: only boost toots having one of the hashtags of the list.
 - match: only boost toots containing given regular expression match.

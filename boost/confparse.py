@@ -165,7 +165,7 @@ class ConfParse(object):
 
         # check if waitminsecs >= waitmaxsecs
         if self.waitminsecs > self.waitmaxsecs:
-            sys.exit('In the [{section}] section, waitminsecs should be smaller than waitmaxsecs. Leaving.'.format(section='retweet'))
+            sys.exit('In the [{section}] section, waitminsecs should be smaller than waitmaxsecs. Leaving.'.format(section='boost'))
 
     @property
     def confvalues(self):

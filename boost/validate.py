@@ -22,7 +22,7 @@ import os.path
 import sys
 import re
 
-# retweet library imports
+# boost library imports
 from boost.tootwasposted import TootWasPosted
 from boost.waitamoment import WaitAMoment
 
