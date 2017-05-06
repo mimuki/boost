@@ -37,7 +37,7 @@ setup(
     version='0.1',
     license='GNU GPL v3',
     description='Boost automatically toots from Mastodon users',
-    long_description='Boost automatically toos from users of the Mastodon social network',
+    long_description='Boost automatically toots from users of the Mastodon social network',
     classifiers=CLASSIFIERS,
     author='Carl Chenet',
     author_email='chaica@ohmytux.com',
