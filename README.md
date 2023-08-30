@@ -1,13 +1,14 @@
 # Boost
 
-Boost automatically toots from users of the [Mastodon](https://mastodon.social) social network. Read the documentation in docs/
-or [read it online](https://mastodonboost.readthedocs.org/en/latest/).
+Automatically boost posts from Mastodon, Pleroma, Akkoma, and probably other stuff too that's compatible with the Mastodon API.
 
 Forked from <https://gitlab.com/chaica/boost>, but i don't know what I'm doing. I've hacked onto this for my own uses, and maybe that's something you're into. Main changes:
 
 - added config option "dontboostboosts" to only boost, well. boosts
 - added config option "dontboostreplies" to only boost replies
 - fixed older_than and younger_than config options 
+
+Read the (moderately out of date) documentation in docs/ or [read the docs online at your peril](https://mastodonboost.readthedocs.org/en/latest/). (the latter link is from the tool I forked this from- their own gitlab page doesn't have the right link, so it's here. but I can't edit that, and it's inherently gonna differ from what I'm doing here. Sorry.)
 
 ## Tips
 
