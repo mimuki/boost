@@ -23,27 +23,31 @@ import sys
 print('\nThis app generates Mastodon app credentials needed by Boost.\nboost_clientcred.txt and boost_usercred.txt will be written in the current dir {cwd}.\nOne connection is initiated to create the app.\nYour password is *not* stored.\n'.format(cwd=getcwd()))
 
 # get the instance
-instance = input('Mastodon instance url (defaults to https://mastodon.social):')
-if not instance:
-    instance = 'https://mastodon.social'
-elif not instance.startswith('http'):
-    instance = ''.join(['https://', instance])
+validInstance = False
+while not validInstance:
+    instance = input('Instance url (e.g. https://weirder.earth): ')
+    if not instance:
+        print("You need to pick an instance! If you don't know what yours is, ask around!")
+    elif not instance.startswith('http'):
+        instance = ''.join(['https://', instance])
+        validInstance = True
+    else:
+        validInstance = True
 
 # get the username
-userok = False
-while not userok:
-    user = input('Mastodon login:')
+validUser = False
+print("This tool can only log you in via your email, not by your username. Sorry about that. ")
+while not validUser:
+    user = input('Email: ')
     if not user:
-        print('Your Mastodon username can not be empty')
-        userok = False
+        print('You need to write an email!')
     elif '@' not in user or '.' not in user:
-        print('Your Mastodon username should be an email')
-        userok = False
+        print("...I don't think that's an email.")
     else:
-        userok = True
+        validUser = True
 
 # get the password
-password = getpass(prompt='Mastodon password:')
+password = getpass(prompt='Password: ')
 Mastodon.create_app(
      'boost',
       api_base_url=instance,
