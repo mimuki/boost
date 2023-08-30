@@ -44,7 +44,7 @@ class Validate(object):
         # test if it was boosted enough to be boosted by me
         if self.toot['reblogs_count'] >= self.cfgvalues['boosts']:
             # send the toot if all checks are ok
-            if not self.not_boost_hashtags() and self.boost_only_if_hashtags() and self.boost_only_if_older_than() and self.boost_only_if_younger_than() and self.boost_only_if_matching_regex():
+            if not self.not_boost_hashtags() and self.boost_only_if_hashtags() and self.boost_only_if_older_than() and self.boost_only_if_younger_than() and self.boost_only_if_matching_regex() and self.not_boost_replies() and self.not_boost_boosts():
                 self.storeit = True
                 if self.args.dryrun:
                     if not self.args.populatedb:
@@ -54,7 +54,10 @@ class Validate(object):
                 else:
                     # at last boost the toot
                     if not self.args.populatedb:
-                        self.api.status_reblog(self.toot['id'])
+                        try:
+                            self.api.status_reblog(self.toot['id'])
+                        except:
+                            print("Something went wrong, and I don't know how to fix it. I hope it's fine.")
                     if self.cfgvalues['favorite']:
                         self.api.status_favourite(self.toot['id'])
             else:
@@ -73,7 +76,19 @@ class Validate(object):
             if '#<span>{}</span></a>'.format(i) in self.toot['content']:
                 found = True
         return found
-
+    def not_boost_replies(self):
+        '''check if the toot is replying to someone'''
+        found = False
+        if self.cfgvalues['dontboostreplies']:
+            if self.toot['in_reply_to_id'] == None:
+                found = True
+        return found
+    def not_boost_boosts(self):
+        '''check if the toot is a boost'''
+        if self.cfgvalues['dontboostboosts']:
+            if self.toot['reblog'] == None:
+                found = True
+        return found
     def boost_only_if_hashtags(self):
         '''boost only if the toot has the following hashtag'''
         found = False
@@ -92,7 +107,8 @@ class Validate(object):
         if self.cfgvalues['olderthan']:
             # check if the toot is older than a number of minutes
             now = datetime.datetime.utcnow()
-            tootbirth = datetime.datetime.strptime(self.toot['created_at'].split('.')[0], '%Y-%m-%dT%H:%M:%S')
+            tootbirth = self.toot['created_at'].replace(tzinfo=None)
+            #tootbirth = datetime.datetime.strptime(self.toot['created_at'].split('.')[0], '%Y-%m-%dT%H:%M:%S')
             lapse = now - tootbirth
             try:
                 if (lapse.seconds / 60) > self.cfgvalues['olderthan']:
@@ -111,7 +127,7 @@ class Validate(object):
         if self.cfgvalues['youngerthan']:
             # check if the toot is younger than a number of minutes
             now = datetime.datetime.utcnow()
-            tootbirth = datetime.datetime.strptime(self.toot['created_at'].split('.')[0], '%Y-%m-%dT%H:%M:%S')
+            tootbirth = self.toot['created_at'].replace(tzinfo=None)
             lapse = now - tootbirth
             try:
                 if (lapse.seconds / 60) < self.cfgvalues['youngerthan']:

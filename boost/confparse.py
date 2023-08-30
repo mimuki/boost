@@ -33,6 +33,8 @@ class ConfParse(object):
         self.waitmaxsecs = 1
         self.pathtoconf = pathtoconf
         self.dontboosthashtags = []
+        self.dontboostreplies = []
+        self.dontboostboosts = []
         self.onlyifhashtags = []
         self.matchregex = ''
         self.olderthan = 0
@@ -84,6 +86,14 @@ class ConfParse(object):
                     confoption = 'boosts'
                     if config.has_option(section, confoption):
                         self.boosts = config.get(section, confoption)
+                    # don't boost replies option
+                    confoption = 'dontboostreplies'
+                    if config.has_option(section, confoption):
+                        self.dontboostreplies = config.get(section, confoption)
+                    # don't boost boosts option
+                    confoption = 'dontboostboosts'
+                    if config.has_option(section, confoption):
+                        self.dontboostboosts = config.get(section, confoption)
                     # waitminsec option
                     confoption = 'waitminsecs'
                     if config.has_option(section, confoption):
@@ -175,6 +185,8 @@ class ConfParse(object):
                 'usercred': self.usercred,
                 'clientcred': self.clientcred,
                 'boosts': self.boosts,
+                'dontboostreplies': self.dontboostreplies,
+                'dontboostboosts': self.dontboostboosts,
                 'waitminsecs': self.waitminsecs,
                 'waitmaxsecs': self.waitmaxsecs,
                 'sqlitepath': self.sqlitepath,
