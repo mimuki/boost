@@ -15,22 +15,14 @@ if you wanna use this in cron for automated boosting, make sure all your paths a
 
 also i havent really edited the rest of this readme to be accurate or up to date, so good luck. i havent tested this much beyond my very exact use case so stuff might be broken, sorry
 
-## Quick Install
+## "Quick" Install
+Get this repo saved on your computer in the method of your choice (download it and unzip it, clone it, etc). extract it if needed, and run ` python3 setup.py install --install-scripts=/usr/bin`. (or wherever you'd like it to install. just `python3 setup.py install` will install in the current directory.)
 
-* Install Boost from sources    
-  *(see the installation guide for full details)
-  [Installation Guide](http://mastodonboost.readthedocs.org/en/latest/install.html)*
-  
-
-        # tar zxvf boost-0.1.tar.gz
-        # cd boostet
-        # python3 setup.py install
-        # # or
-        # python3 setup.py install --install-scripts=/usr/bin
+Then, run `register_boost_app` to connect up the account you want to boost from, and follow the prompts.
 
 ## Use Boost
 
-* Create or modify boost.ini file in order to configure Boost:
+* Create a boost.ini file in order to configure Boost:
 
         [mastodon]
         users_to_boost=someone@mastodon.social,someonelse@framapiarg.org
@@ -53,10 +45,6 @@ also i havent really edited the rest of this readme to be accurate or up to date
 * Launch Boost
 
         $ boost -c /path/to/boost.ini
-
-## Original Author
-
-Carl Chenet <chaica@ohmytux.com>
 
 ## License
 
